@@ -1,45 +1,95 @@
+//show book form on click
+const showFormBtn = document.querySelector('.showFormBtn');
+const formContainer = document.querySelector(".formContainer");
+function showFormBtnListener() {
+	showFormBtn.addEventListener('click', (e) => {
+		formContainer.style.display = "block";
+	});
+}
+
+//close book form on click
+const closeFormBtn = document.querySelector('.closeFormBtn');
+function closeFormBtnListener() {
+	closeFormBtn.addEventListener('click', (e) => {
+		formContainer.style.display = "none";
+	});
+}
+
+showFormBtnListener();
+closeFormBtnListener();
+
+//book object
+
 let myLibrary = [];
 
-function Book(title, author, pages, read) {
+function Book(title,author,pages,isRead) {
 	this.title = title;
 	this.author = author;
 	this.pages = pages;
-	this.read = read;
-	this.info = function() {
-		console.log( title + " by " + author + ", " + pages + " pages, " + read);
-		return title + " by " + author + ", " + pages + " pages, " + read;
-	};
+	this.isRead = isRead;
 };
 
-function addBookToLibrary(book) {
-    myLibrary.push(book);
+//get the new book from user's inputs
+function getBookFromInput() {
+	const title = document.getElementById("title").value;
+	const author = document.getElementById("author").value;
+	const page = document.getElementById("page").value;
+	const isRead = document.getElementById("status").checked;
+	return new Book(title,author,page,isRead);
 };
 
-//target container in html
-const container = document.querySelector('.container');
+//add book to library on click
+const addBookBtn = document.querySelector(".addBookBtn");
+addBookBtn.addEventListener("click", addBookToLibrary);
 
-function displayBook(myLibrary) {
+function addBookToLibrary(event) {
+	event.preventDefault();
+	const newBook = getBookFromInput();
+	myLibrary.push(newBook);
+	formContainer.style.display = "none";
+	displayCard();
+};
+
+function displayCard() {
 	for (const book of myLibrary) {
-		//create a card for each book
-		const card = document.createElement('div');
-		for (let details in book) {
-			card.textContent = book.info();
-		}
-		//add the card inside the container
-		container.appendChild(card);
+		createCard(book);
 	};
 };
 
-// Testing display book func 
+const cardContainer = document.querySelector('.cardContainer');
 
-const book1 = new Book("Three Little Pigs","Janelle C","103","not read yet");
-const book2 = new Book("Red Riding Hood","Robin K","83","read");
-const book3 = new Book("Silly Beans","Benjamin J","183","read");
+function createCard(book) {
+	const card = document.createElement('div');
+	const title = document.createElement('p');
+	const author = document.createElement('p');
+	const page = document.createElement('p');
+	const buttonGroup = document.createElement('div');
+	const statusBtn = document.createElement('button');
+	const removeBtn = document.createElement('button');
 
+	card.classList.add('card');
+	buttonGroup.classList.add('buttonGroup');
+	statusBtn.classList.add('btn');
+	removeBtn.classList.add('btn');
 
-addBookToLibrary(book1);
-addBookToLibrary(book2);
-addBookToLibrary(book3);
+	title.textContent = `${book.title}`;
+	author.textContent = `${book.author}`;
+	page.textContent = `${book.page}`;
+	removeBtn.textContent = 'Remove';
 
+	if (book.isRead) {
+		statusBtn.style.backgroundColor = 'green';
+		statusBtn.textContent = 'Read';
+	} else {
+		statusBtn.style.backgroundColor = 'red';
+		statusBtn.textContent = 'Unread';
+	}
 
-displayBook(myLibrary);
+	card.appendChild(title);
+	card.appendChild(author);
+	card.appendChild(page);
+	card.appendChild(buttonGroup);
+	buttonGroup.appendChild(statusBtn);
+	buttonGroup.appendChild(removeBtn);
+	cardContainer.appendChild(card);
+};
