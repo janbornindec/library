@@ -19,8 +19,6 @@ body {
     background-color: rgb(233, 223, 255);
 }
 
-/* top section */
-
 .header {
     width: 100%;
     height: 100%;
@@ -33,8 +31,6 @@ h1 {
     padding-left: 3em;
 }
 
-/* main section */
-
 .main {
     width: 100%;
     height: 100%;
@@ -42,30 +38,11 @@ h1 {
     flex-direction: column;
 }
 
-.container {
-    padding: 3em 0;
-    padding-right: 6em;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    column-gap: 2em;
-}
-
-.card {
-    max-height: 150px;
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-    border-radius: 1em;
-    box-shadow: 1px 2px 5px 1px rgba(128, 128, 128, 0.4);
-    padding: 1em;
-    text-align: center;
-}
-
-/* form section */
+/* form trigger section */
 .buttonContainer {
     display: flex;
     justify-content: center;
-    margin: 3em;
+    margin: 1em;
     width: 100%;
 }
 
@@ -83,15 +60,14 @@ h1 {
     background-color: rgb(255, 240, 251);
 }
 
-/* add book form */
+/* popup form */
 
 .formContainer {
     width: 100%;
     height: 100%;
-    opacity: 95%;
     top: 0;
     left: 0;
-    display:none;
+    display: none;
     position:fixed;
     background-color:#313131;
     overflow:auto;
@@ -179,4 +155,50 @@ form input {
 .addBookBtn:hover {
     cursor: pointer;
     text-decoration: underline;
+}
+
+/* card section */
+.cardContainer {
+    margin: 0 6em;
+    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 0.25fr));
+    row-gap: 2em;
+    column-gap: 2em;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 1em;
+    box-shadow: 1px 2px 5px 1px rgba(128, 128, 128, 0.4);
+    padding: 2em;
+    text-align: center;
+}
+
+.btn {
+    border-radius: 0.5em;
+    padding: 1em;
+    width: 100%;
+    font-size: 1em;
+}
+
+.btn:hover {
+    cursor: pointer;
+    background-color:#3131317e;
+    color: white;
+}
+
+.card p {
+    padding-bottom: 0.5em;
+}
+
+.buttonGroup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding-top: 1em;
+    gap: 0.5em;
 }
