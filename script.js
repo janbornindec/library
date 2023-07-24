@@ -1,19 +1,21 @@
 //show book form on click
 const showFormBtn = document.querySelector('.showFormBtn');
 const formContainer = document.querySelector(".formContainer");
+const addBookForm = document.querySelector(".addBookForm");
 function showFormBtnListener() {
 	showFormBtn.addEventListener('click', (e) => {
 		formContainer.style.display = "block";
+		addBookForm.reset();
 	});
-}
+};
 
 //close book form on click
 const closeFormBtn = document.querySelector('.closeFormBtn');
 function closeFormBtnListener() {
-	closeFormBtn.addEventListener('click', (e) => {
+	closeFormBtn.addEventListener('click', () => {
 		formContainer.style.display = "none";
 	});
-}
+};
 
 showFormBtnListener();
 closeFormBtnListener();
@@ -47,13 +49,7 @@ function addBookToLibrary(event) {
 	const newBook = getBookFromInput();
 	myLibrary.push(newBook);
 	formContainer.style.display = "none";
-	displayCard();
-};
-
-function displayCard() {
-	for (const book of myLibrary) {
-		createCard(book);
-	};
+	reset();
 };
 
 const cardContainer = document.querySelector('.cardContainer');
@@ -62,7 +58,7 @@ function createCard(book) {
 	const card = document.createElement('div');
 	const title = document.createElement('p');
 	const author = document.createElement('p');
-	const page = document.createElement('p');
+	const pages = document.createElement('p');
 	const buttonGroup = document.createElement('div');
 	const statusBtn = document.createElement('button');
 	const removeBtn = document.createElement('button');
@@ -70,26 +66,42 @@ function createCard(book) {
 	card.classList.add('card');
 	buttonGroup.classList.add('buttonGroup');
 	statusBtn.classList.add('btn');
+	statusBtn.classList.add('cardStatusBtn');
 	removeBtn.classList.add('btn');
+	removeBtn.classList.add('remove');
 
 	title.textContent = `${book.title}`;
 	author.textContent = `${book.author}`;
-	page.textContent = `${book.page}`;
+	pages.textContent = `${book.pages}`;
 	removeBtn.textContent = 'Remove';
 
 	if (book.isRead) {
-		statusBtn.style.backgroundColor = 'green';
+		statusBtn.style.backgroundColor = 'rgb(155, 255, 182)';
 		statusBtn.textContent = 'Read';
 	} else {
-		statusBtn.style.backgroundColor = 'red';
+		statusBtn.style.backgroundColor = 'rgb(230, 86, 86)';
 		statusBtn.textContent = 'Unread';
 	}
 
+	statusBtn.addEventListener('click',() => {
+		book.isRead = !book.isRead;
+		reset();
+	});
+
 	card.appendChild(title);
 	card.appendChild(author);
-	card.appendChild(page);
+	card.appendChild(pages);
 	card.appendChild(buttonGroup);
 	buttonGroup.appendChild(statusBtn);
 	buttonGroup.appendChild(removeBtn);
 	cardContainer.appendChild(card);
 };
+
+//reset books visual in container
+function reset() {
+	const cards = document.querySelectorAll('.card');
+    cards.forEach(card => cardContainer.removeChild(card));
+    for (let i=0; i<myLibrary.length; i++){
+        createCard(myLibrary[i]);
+    };
+}
