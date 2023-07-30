@@ -5,6 +5,7 @@ const addBookForm = document.querySelector(".addBookForm");
 function showFormBtnListener() {
 	showFormBtn.addEventListener('click', (e) => {
 		formContainer.style.display = "block";
+		//clear previous entries in form
 		addBookForm.reset();
 	});
 };
@@ -49,7 +50,7 @@ function addBookToLibrary(event) {
 	const newBook = getBookFromInput();
 	myLibrary.push(newBook);
 	formContainer.style.display = "none";
-	reset();
+	displayCards();
 };
 
 const cardContainer = document.querySelector('.cardContainer');
@@ -85,7 +86,7 @@ function createCard(book) {
 
 	statusBtn.addEventListener('click',() => {
 		book.isRead = !book.isRead;
-		reset();
+		displayCards();
 	});
 
 	card.appendChild(title);
@@ -97,8 +98,8 @@ function createCard(book) {
 	cardContainer.appendChild(card);
 };
 
-//reset books visual in container
-function reset() {
+//display and refresh cards
+function displayCards() {
 	const cards = document.querySelectorAll('.card');
     cards.forEach(card => cardContainer.removeChild(card));
     for (let i=0; i<myLibrary.length; i++){
