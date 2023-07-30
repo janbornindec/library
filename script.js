@@ -89,6 +89,10 @@ function createCard(book) {
 		displayCards();
 	});
 
+	removeBtn.addEventListener('click',() => {
+		removeBookFromLibrary(book);
+	})
+
 	card.appendChild(title);
 	card.appendChild(author);
 	card.appendChild(pages);
@@ -97,6 +101,12 @@ function createCard(book) {
 	buttonGroup.appendChild(removeBtn);
 	cardContainer.appendChild(card);
 };
+
+//remove book from library on click
+function removeBookFromLibrary(book) {
+	myLibrary.pop(book);
+	displayCards();
+}
 
 //display and refresh cards
 function displayCards() {
