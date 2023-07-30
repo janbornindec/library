@@ -45,12 +45,25 @@ function getBookFromInput() {
 const addBookBtn = document.querySelector(".addBookBtn");
 addBookBtn.addEventListener("click", addBookToLibrary);
 
+//search if there's an existing book's title & author in library
+const searchTitle = bookTitle => myLibrary.find(existingBook => existingBook.title === bookTitle);
+const searchAuthor = bookAuthor => myLibrary.find(existingBook => existingBook.author === bookAuthor);
+
 function addBookToLibrary(event) {
 	event.preventDefault();
 	const newBook = getBookFromInput();
-	myLibrary.push(newBook);
-	formContainer.style.display = "none";
-	displayCards();
+	const titleInLibrary = searchTitle(newBook.title);
+	const authorInLibrary = searchAuthor(newBook.author);
+	//if title & author match with existing book in library, do nothing
+	if (titleInLibrary && authorInLibrary) {
+		alert("This book already exists.")
+		addBookForm.reset();
+	//otherwise add book
+	} else {
+		myLibrary.push(newBook);
+		formContainer.style.display = "none";
+		displayCards();
+	};
 };
 
 const cardContainer = document.querySelector('.cardContainer');
