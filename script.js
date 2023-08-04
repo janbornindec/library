@@ -46,8 +46,8 @@ const addBookBtn = document.querySelector(".addBookBtn");
 addBookBtn.addEventListener("click", addBookToLibrary);
 
 //search if there's an existing book's title & author in library
-const searchTitle = bookTitle => myLibrary.find(existingBook => existingBook.title === bookTitle);
-const searchAuthor = bookAuthor => myLibrary.find(existingBook => existingBook.author === bookAuthor);
+const searchTitle = bookTitle => myLibrary.find(existingBook => existingBook.title.toLowerCase() === bookTitle.toLowerCase());
+const searchAuthor = bookAuthor => myLibrary.find(existingBook => existingBook.author.toLowerCase() === bookAuthor.toLowerCase());
 
 function addBookToLibrary(event) {
 	event.preventDefault();
