@@ -2,6 +2,7 @@
 const showFormBtn = document.querySelector('.showFormBtn');
 const formContainer = document.querySelector(".formContainer");
 const addBookForm = document.querySelector(".addBookForm");
+
 function showFormBtnListener() {
 	showFormBtn.addEventListener('click', (e) => {
 		formContainer.style.display = "block";
@@ -22,7 +23,6 @@ showFormBtnListener();
 closeFormBtnListener();
 
 //book object
-
 let myLibrary = [];
 
 function Book(title,author,pages,isRead) {
@@ -45,20 +45,29 @@ function getBookFromInput() {
 const addBookBtn = document.querySelector(".addBookBtn");
 addBookBtn.addEventListener("click", addBookToLibrary);
 
+addBookForm.addEventListener("keypress", function(event) {
+	if (event.key === 'Enter') {
+		addBookToLibrary(event);
+	};
+})
+
 //search if there's an existing book's title & author in library
 const searchTitle = bookTitle => myLibrary.find(existingBook => existingBook.title.toLowerCase() === bookTitle.toLowerCase());
 const searchAuthor = bookAuthor => myLibrary.find(existingBook => existingBook.author.toLowerCase() === bookAuthor.toLowerCase());
+const searchPages = bookPages => myLibrary.find(existingBook => existingBook.pages === bookPages);
 
 function addBookToLibrary(event) {
 	event.preventDefault();
 	const newBook = getBookFromInput();
 	const titleInLibrary = searchTitle(newBook.title);
 	const authorInLibrary = searchAuthor(newBook.author);
+	const pagesInLibrary = searchPages(newBook.pages);
+
 	//if title & author match with existing book in library, do nothing
-	if (titleInLibrary && authorInLibrary) {
-		alert("This book already exists.")
-		addBookForm.reset();
-	//otherwise add book
+	if (titleInLibrary && authorInLibrary && pagesInLibrary) {
+		alert("This book already exists.");
+	} else if ((title.value === '') || (author.value === '') || (page.value === '')) {
+		alert("Please fill in all fields.")
 	} else {
 		myLibrary.push(newBook);
 		formContainer.style.display = "none";
