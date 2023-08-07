@@ -95,12 +95,16 @@ form div {
     gap: 0.5em;
 }
 
-form input {
+input {
     padding: 1.3em;
     width: 90%;
     border-radius: 0.5em;
     border: none;
     background-color: rgb(233, 223, 255);
+}
+
+input:invalid {
+    border: 1px dotted red;
 }
 
 .form_close {
