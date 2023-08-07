@@ -15,6 +15,7 @@ function showFormBtnListener() {
 const closeFormBtn = document.querySelector('.closeFormBtn');
 function closeFormBtnListener() {
 	closeFormBtn.addEventListener('click', () => {
+		addBookForm.reset();
 		formContainer.style.display = "none";
 	});
 };
