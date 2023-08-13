@@ -20,6 +20,7 @@ function closeFormBtnListener() {
 	});
 };
 
+//close form when press escape
 window.addEventListener("keydown", function(event) {
 	if (event.key === 'Escape') {
 		addBookForm.reset();
