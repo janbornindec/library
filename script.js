@@ -20,6 +20,13 @@ function closeFormBtnListener() {
 	});
 };
 
+window.addEventListener("keydown", function(event) {
+	if (event.key === 'Escape') {
+		addBookForm.reset();
+		formContainer.style.display = "none";
+	};
+});
+
 showFormBtnListener();
 closeFormBtnListener();
 
