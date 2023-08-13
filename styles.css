@@ -117,6 +117,7 @@ input:invalid {
     font-size: 1.3em;
     color: black;
     border: none;
+    background-color: white;
 }
 
 .closeFormBtn:hover {
