@@ -31,6 +31,7 @@ window.addEventListener("keydown", function(event) {
 showFormBtnListener();
 closeFormBtnListener();
 
+/*
 //book object
 let myLibrary = [];
 
@@ -39,10 +40,51 @@ function Book(title,author,pages,isRead) {
 	this.author = author;
 	this.pages = pages;
 	this.isRead = isRead;
-};
+};*/
+
+//data restructuring using Class
+class Book {
+	constructor(
+		title,
+		author = 'Unknown',
+		pages = 0,
+		isRead = false
+	) {
+		this.title = title;
+		this.author = author;
+		this.pages = pages;
+		this.isRead = isRead;
+	}
+}
+
+class Library {
+	constructor() {
+		this.books = []
+	}
+
+	addBook(newBook) {
+		if (!this.isInLibrary(newBook)) {
+			this.books.push(newBook)
+		}
+	}
+
+	removeBook(title) {
+		return this.books.filter((book) => book.title !== title)
+	}
+
+	getBook(title) {
+		return this.books.find((book) => book.title === title)
+	}
+
+	isInLibrary(newBook) {
+		return this.books.some((book) => book.title === newBook.title)
+	}
+}
+
+const library = new Library();
 
 //get the new book from user's inputs
-function getBookFromInput() {
+const getBookFromInput = () => {
 	const title = document.getElementById("title").value;
 	const author = document.getElementById("author").value;
 	const page = document.getElementById("page").value;
@@ -54,31 +96,22 @@ function getBookFromInput() {
 const addBookBtn = document.querySelector(".addBookBtn");
 addBookBtn.addEventListener("click", addBookToLibrary);
 
-addBookForm.addEventListener("keypress", function(event) {
-	if (event.key === 'Enter') {
-		addBookToLibrary(event);
+addBookForm.addEventListener("keypress", function(e) {
+	if (e.key === 'Enter') {
+		addBookToLibrary(e);
 	};
 })
 
-//search if there's an existing book's title & author in library
-const searchTitle = bookTitle => myLibrary.find(existingBook => existingBook.title.toLowerCase() === bookTitle.toLowerCase());
-const searchAuthor = bookAuthor => myLibrary.find(existingBook => existingBook.author.toLowerCase() === bookAuthor.toLowerCase());
-const searchPages = bookPages => myLibrary.find(existingBook => existingBook.pages === bookPages);
-
-function addBookToLibrary(event) {
-	event.preventDefault();
+function addBookToLibrary(e) {
+	e.preventDefault();
 	const newBook = getBookFromInput();
-	const titleInLibrary = searchTitle(newBook.title);
-	const authorInLibrary = searchAuthor(newBook.author);
-	const pagesInLibrary = searchPages(newBook.pages);
-
-	//if title & author match with existing book in library, do nothing
-	if (titleInLibrary && authorInLibrary && pagesInLibrary) {
+	
+	if (library.isInLibrary(newBook)) {
 		alert("This book already exists.");
-	} else if ((title.value === '') || (author.value === '') || (page.value === '')) {
-		alert("Please fill in all fields.")
+	} else if (title.value === '') {
+		alert("Please enter the book's title.")
 	} else {
-		myLibrary.push(newBook);
+		library.addBook(newBook);
 		formContainer.style.display = "none";
 		displayCards();
 	};
@@ -135,7 +168,7 @@ function createCard(book) {
 
 //remove book from library on click
 function removeBookFromLibrary(book) {
-	myLibrary.pop(book);
+	library.removeBook(book);
 	displayCards();
 }
 
@@ -143,7 +176,7 @@ function removeBookFromLibrary(book) {
 function displayCards() {
 	const cards = document.querySelectorAll('.card');
     cards.forEach(card => cardContainer.removeChild(card));
-    for (let i=0; i<myLibrary.length; i++){
-        createCard(myLibrary[i]);
+    for (let i=0; i<library.books.length; i++){
+        createCard(library.books[i]);
     };
 }
